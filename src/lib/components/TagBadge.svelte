@@ -9,9 +9,12 @@
 
 	let { name, count, type = 'category' }: Props = $props();
 
-	const href = type === 'category' 
-		? `${base}/category/${name.toLowerCase()}/` 
-		: `${base}/tag/${name.toLowerCase()}/`;
+	// Use $derived to make href reactive when props change
+	let href = $derived(
+		type === 'category' 
+			? `${base}/category/${name.toLowerCase()}/` 
+			: `${base}/tag/${name.toLowerCase()}/`
+	);
 </script>
 
 <a {href} class="tag-badge" class:tag-type={type === 'tag'}>

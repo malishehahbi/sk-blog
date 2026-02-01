@@ -9,7 +9,10 @@
 	}
 
 	let { data }: Props = $props();
-	const { post, relatedPosts } = data;
+	
+	// Use $derived to make data reactive when navigating between posts
+	let post = $derived(data.post);
+	let relatedPosts = $derived(data.relatedPosts);
 </script>
 
 <svelte:head>

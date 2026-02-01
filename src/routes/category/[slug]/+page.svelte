@@ -7,10 +7,13 @@
 	}
 
 	let { data }: Props = $props();
-	const { category, posts } = data;
+	
+	// Use $derived to make data reactive when navigating between categories
+	let category = $derived(data.category);
+	let posts = $derived(data.posts);
 
-	// Capitalize category name
-	const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+	// Capitalize category name (also derived)
+	let categoryName = $derived(category.charAt(0).toUpperCase() + category.slice(1));
 </script>
 
 <svelte:head>

@@ -7,10 +7,13 @@
 	}
 
 	let { data }: Props = $props();
-	const { tag, posts } = data;
+	
+	// Use $derived to make data reactive when navigating between tags
+	let tag = $derived(data.tag);
+	let posts = $derived(data.posts);
 
-	// Format tag name
-	const tagName = tag.charAt(0).toUpperCase() + tag.slice(1);
+	// Format tag name (also derived)
+	let tagName = $derived(tag.charAt(0).toUpperCase() + tag.slice(1));
 </script>
 
 <svelte:head>
