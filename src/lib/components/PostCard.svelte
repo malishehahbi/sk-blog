@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import type { PostSummary } from '$lib/types/post';
 	import { formatDate } from '$lib/utils/date';
 
@@ -13,20 +14,20 @@
 {#if variant === 'featured'}
 	<article class="post-card featured">
 		{#if post.featuredImage}
-			<a href="/post/{post.slug}" class="post-image-link">
+			<a href="{base}/post/{post.slug}/" class="post-image-link">
 				<img src={post.featuredImage} alt={post.title} class="post-image" />
 			</a>
 		{/if}
 		<div class="post-content">
 			{#if post.categories && post.categories.length > 0}
 				<div class="post-meta">
-					<a href="/category/{post.categories[0].toLowerCase()}" class="post-category">
+					<a href="{base}/category/{post.categories[0].toLowerCase()}/" class="post-category">
 						{post.categories[0]}
 					</a>
 				</div>
 			{/if}
 			<h2 class="post-title">
-				<a href="/post/{post.slug}">{post.title}</a>
+				<a href="{base}/post/{post.slug}/">{post.title}</a>
 			</h2>
 			{#if post.excerpt}
 				<p class="post-excerpt">{post.excerpt}</p>
@@ -42,7 +43,7 @@
 	<article class="post-card compact">
 		<div class="post-content">
 			<h3 class="post-title">
-				<a href="/post/{post.slug}">{post.title}</a>
+				<a href="{base}/post/{post.slug}/">{post.title}</a>
 			</h3>
 			<div class="post-footer">
 				<time datetime={post.date}>{formatDate(post.date)}</time>
@@ -52,20 +53,20 @@
 {:else}
 	<article class="post-card">
 		{#if post.featuredImage}
-			<a href="/post/{post.slug}" class="post-image-link">
+			<a href="{base}/post/{post.slug}/" class="post-image-link">
 				<img src={post.featuredImage} alt={post.title} class="post-image" />
 			</a>
 		{/if}
 		<div class="post-content">
 			{#if post.categories && post.categories.length > 0}
 				<div class="post-meta">
-					<a href="/category/{post.categories[0].toLowerCase()}" class="post-category">
+					<a href="{base}/category/{post.categories[0].toLowerCase()}/" class="post-category">
 						{post.categories[0]}
 					</a>
 				</div>
 			{/if}
 			<h3 class="post-title">
-				<a href="/post/{post.slug}">{post.title}</a>
+				<a href="{base}/post/{post.slug}/">{post.title}</a>
 			</h3>
 			{#if post.excerpt}
 				<p class="post-excerpt">{post.excerpt}</p>

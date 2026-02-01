@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { base } from '$app/paths';
+
 	interface Props {
 		name: string;
 		count?: number;
@@ -8,8 +10,8 @@
 	let { name, count, type = 'category' }: Props = $props();
 
 	const href = type === 'category' 
-		? `/category/${name.toLowerCase()}` 
-		: `/tag/${name.toLowerCase()}`;
+		? `${base}/category/${name.toLowerCase()}/` 
+		: `${base}/tag/${name.toLowerCase()}/`;
 </script>
 
 <a {href} class="tag-badge" class:tag-type={type === 'tag'}>

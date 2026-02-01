@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -25,7 +26,7 @@
 				An unexpected error occurred. Please try again later.
 			{/if}
 		</p>
-		<a href="/" class="btn btn-primary">Back to Home</a>
+		<a href="{base}/" class="btn btn-primary">Back to Home</a>
 	</div>
 </div>
 

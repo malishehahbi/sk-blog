@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { formatDate } from '$lib/utils/date';
 	import PostCard from '$lib/components/PostCard.svelte';
 	import type { PageData } from './$types';
@@ -24,7 +25,7 @@
 	<header class="article-header container container-narrow">
 		{#if post.categories && post.categories.length > 0}
 			<div class="article-meta">
-				<a href="/category/{post.categories[0].toLowerCase()}" class="article-category">
+				<a href="{base}/category/{post.categories[0].toLowerCase()}/" class="article-category">
 					{post.categories[0]}
 				</a>
 			</div>
@@ -63,7 +64,7 @@
 			<span class="tags-label">Tags:</span>
 			<div class="tags-list">
 				{#each post.tags as tag}
-					<a href="/tag/{tag.toLowerCase()}" class="tag">{tag}</a>
+					<a href="{base}/tag/{tag.toLowerCase()}/" class="tag">{tag}</a>
 				{/each}
 			</div>
 		</div>

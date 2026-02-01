@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -45,15 +46,15 @@
 	function handleSubmit(e: Event) {
 		e.preventDefault();
 		if (inputValue.trim()) {
-			goto(`/search/?q=${encodeURIComponent(inputValue.trim())}`);
+			goto(`${base}/search/?q=${encodeURIComponent(inputValue.trim())}`);
 		} else {
-			goto('/search/');
+			goto(`${base}/search/`);
 		}
 	}
 
 	function handleClear() {
 		inputValue = '';
-		goto('/search/');
+		goto(`${base}/search/`);
 	}
 </script>
 
@@ -111,7 +112,7 @@
 				</div>
 			{:else}
 				<div class="empty-state">
-					<p>Try searching for something else, or browse by <a href="/categories/">categories</a> or <a href="/tags/">tags</a>.</p>
+					<p>Try searching for something else, or browse by <a href="{base}/categories/">categories</a> or <a href="{base}/tags/">tags</a>.</p>
 				</div>
 			{/if}
 		{:else}

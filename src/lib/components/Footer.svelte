@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { base } from '$app/paths';
+
 	interface Props {
 		categories?: { name: string; count: number }[];
 	}
@@ -23,7 +25,7 @@
 					<ul class="footer-list">
 						{#each categories.slice(0, 5) as category}
 							<li>
-								<a href="/category/{category.name.toLowerCase()}">{category.name}</a>
+								<a href="{base}/category/{category.name.toLowerCase()}/">{category.name}</a>
 							</li>
 						{/each}
 					</ul>
@@ -33,10 +35,10 @@
 			<div class="footer-links">
 				<h4 class="footer-heading">Links</h4>
 				<ul class="footer-list">
-					<li><a href="/">Home</a></li>
-					<li><a href="/categories">Categories</a></li>
-					<li><a href="/tags">Tags</a></li>
-					<li><a href="/search">Search</a></li>
+					<li><a href="{base}/">Home</a></li>
+					<li><a href="{base}/categories/">Categories</a></li>
+					<li><a href="{base}/tags/">Tags</a></li>
+					<li><a href="{base}/search/">Search</a></li>
 				</ul>
 			</div>
 		</div>

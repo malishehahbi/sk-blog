@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 
 	let menuOpen = $state(false);
 
@@ -8,21 +9,28 @@
 	}
 
 	function isSearchPage(pathname: string): boolean {
-		return pathname === '/search' || pathname.startsWith('/search');
+		return pathname === `${base}/search` || pathname.startsWith(`${base}/search`);
+	}
+
+	function isActive(pathname: string, path: string): boolean {
+		if (path === '/') {
+			return pathname === base || pathname === `${base}/`;
+		}
+		return pathname.startsWith(`${base}${path}`);
 	}
 </script>
 
 <header class="header">
 	<div class="header-inner container">
-		<a href="/" class="logo">
+		<a href="{base}/" class="logo">
 			<span class="logo-text">Blog</span>
 		</a>
 
 		<nav class="nav-desktop">
-			<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
-			<a href="/categories" class:active={$page.url.pathname.startsWith('/categories')}>Categories</a>
-			<a href="/tags" class:active={$page.url.pathname.startsWith('/tags')}>Tags</a>
-			<a href="/search" class:active={isSearchPage($page.url.pathname)}>Search</a>
+			<a href="{base}/" class:active={isActive($page.url.pathname, '/')}>Home</a>
+			<a href="{base}/categories/" class:active={isActive($page.url.pathname, '/categories')}>Categories</a>
+			<a href="{base}/tags/" class:active={isActive($page.url.pathname, '/tags')}>Tags</a>
+			<a href="{base}/search/" class:active={isSearchPage($page.url.pathname)}>Search</a>
 		</nav>
 
 		<button class="menu-toggle" onclick={toggleMenu} aria-label="Toggle menu">
@@ -33,10 +41,10 @@
 
 	{#if menuOpen}
 		<nav class="nav-mobile">
-			<a href="/" class:active={$page.url.pathname === '/'} onclick={() => menuOpen = false}>Home</a>
-			<a href="/categories" class:active={$page.url.pathname.startsWith('/categories')} onclick={() => menuOpen = false}>Categories</a>
-			<a href="/tags" class:active={$page.url.pathname.startsWith('/tags')} onclick={() => menuOpen = false}>Tags</a>
-			<a href="/search" class:active={isSearchPage($page.url.pathname)} onclick={() => menuOpen = false}>Search</a>
+			<a href="{base}/" class:active={isActive($page.url.pathname, '/')} onclick={() => menuOpen = false}>Home</a>
+			<a href="{base}/categories/" class:active={isActive($page.url.pathname, '/categories')} onclick={() => menuOpen = false}>Categories</a>
+			<a href="{base}/tags/" class:active={isActive($page.url.pathname, '/tags')} onclick={() => menuOpen = false}>Tags</a>
+			<a href="{base}/search/" class:active={isSearchPage($page.url.pathname)} onclick={() => menuOpen = false}>Search</a>
 		</nav>
 	{/if}
 </header>
