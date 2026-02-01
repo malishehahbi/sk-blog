@@ -2,7 +2,7 @@
 title: Whitespace Isn’t Empty — It’s the Most Powerful Tool in Design
 date: 2025-10-14
 excerpt: Great design isn’t created by adding more elements—it’s created by removing noise. Whitespace is what gives interfaces clarity, rhythm, and premium feel.
-featuredImage: "/sk-blog/src/lib/imgs/photo-1769425105570-b47c0b235933.jpeg?w=1200&h=630&fit=crop"
+featuredImage: "https://images.unsplash.com/photo-1690228254548-31ef53e40cd1?w=1200&h=630&fit=crop"
 categories:
   - Design
   - Technology
