@@ -13,7 +13,7 @@ const config = {
 		paths: {
 			// Change this to your GitHub repo name if not using custom domain
 			// e.g., base: '/my-blog'
-			base: '/sk-blog'
+			base: process.env.NODE_ENV === 'production' ? '/sk-bblog' : ''
 		}
 	}
 };
