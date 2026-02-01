@@ -2,7 +2,7 @@
 title: "Designing a Markdown-Powered Blog"
 date: "2024-01-14"
 excerpt: "Why SvelteKit is an excellent choice for building fast, modern websites. A look at its features and benefits."
-featuredImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1373&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+featuredImage: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&h=630&fit=crop"
 categories:
   - Technology
 tags:
