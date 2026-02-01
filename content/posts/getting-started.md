@@ -43,7 +43,7 @@ After the frontmatter, you can write your content using standard Markdown syntax
 - **Bold text** with `**double asterisks**`
 - *Italic text* with `*single asterisks*`
 - `Code` with backticks
-- [Links](/) with `[text](url)`
+- [Links](https://example.com) with `[text](url)`
 
 ### Code Blocks
 
