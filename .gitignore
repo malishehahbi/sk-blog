@@ -1,5 +1,5 @@
 node_modules
-
+/content/.obsidian
 # Output
 .output
 .vercel

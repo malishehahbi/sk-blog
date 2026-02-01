@@ -2,8 +2,7 @@
 title: "Why Most Apps Feel the Same Now (And What It Means for Tech)"
 date: "2026-01-13"
 excerpt: "Modern apps are cleaner and faster than ever—but they’re also starting to look identical. Here’s why UI sameness is happening, and why it matters."
-featuredImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=630&fit=crop
-"
+featuredImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=630&fit=crop"
 categories:
   - Technology
 tags:
