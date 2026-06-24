@@ -14,6 +14,9 @@ const config = {
 			// Change this to your GitHub repo name if not using custom domain
 			// e.g., base: '/my-blog'
 			base: '/blog'
+		},
+		prerender: {
+			handleHttpError: 'warn',
 		}
 	}
 };

@@ -3,8 +3,16 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad, EntryGenerator } from './$types';
 
 export const entries: EntryGenerator = () => {
-	const categories = getAllCategories();
-	return categories.map((cat) => ({ slug: cat.name.toLowerCase() }));
+	const allCategories = getAllCategories();
+	const arCategories = getAllCategories('ar');
+
+	const entries = allCategories.map((cat) => ({ slug: cat.name.toLowerCase() }));
+
+	for (const cat of arCategories) {
+		entries.push({ slug: cat.name.toLowerCase(), locale: 'ar' });
+	}
+
+	return entries;
 };
 
 export const load: PageServerLoad = async ({ params }) => {
