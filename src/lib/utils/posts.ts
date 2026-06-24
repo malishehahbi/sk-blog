@@ -28,31 +28,52 @@ function parseLocale(filename: string): { slug: string; locale: 'en' | 'ar' } {
 }
 
 function safeParseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
+	// Pre-process YAML to auto-quote values containing colons, which break js-yaml
+	const preprocessed = raw.replace(
+		/^---\r?\n([\s\S]*?)\r?\n---/,
+		(_match, yamlBlock: string) => {
+			const lines = yamlBlock.split(/\r?\n/);
+			const fixedLines = lines.map((line: string) => {
+				if (!line.trim() || /^\s/.test(line)) return line;
+				const idx = line.indexOf(':');
+				if (idx === -1) return line;
+				const key = line.slice(0, idx).trim();
+				const value = line.slice(idx + 1).trim();
+				if (!value || /^["'[{\d]/.test(value)) return line;
+				if (value.includes(':') || /[\u0600-\u06FF]/.test(value)) {
+					return `${key}: "${value}"`;
+				}
+				return line;
+			});
+			return `---\n${fixedLines.join('\n')}\n---`;
+		}
+	);
+
 	try {
-		return matter(raw);
+		return matter(preprocessed);
 	} catch {
-		// If YAML parsing fails (e.g. unquoted values with colons),
-		// auto-quote unquoted string values and retry
-		const fixed = raw.replace(
-			/^---\n([\s\S]*?)\n---/,
-			(_match, yamlBlock: string) => {
-				const lines = yamlBlock.split('\n');
-				const fixedLines = lines.map((line: string) => {
-					if (/^\s+/.test(line)) return line;
-					const idx = line.indexOf(':');
-					if (idx === -1) return line;
-					const key = line.slice(0, idx);
-					const value = line.slice(idx + 1);
-					if (!value.trim() || /^["'[{\s]/.test(value.trim())) return line;
-					if (value.includes(':') || /[\u0600-\u06FF]/.test(value)) {
-						return `${key}: "${value.trim()}"`;
-					}
-					return line;
-				});
-				return `---\n${fixedLines.join('\n')}\n---`;
+		// Final fallback: parse frontmatter manually with simple line-by-line extraction
+		const match = preprocessed.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+		if (!match) return matter(preprocessed);
+		const yamlBlock = match[1];
+		const rest = preprocessed.slice(match[0].length);
+		const data: Record<string, unknown> = {};
+		let currentKey = '';
+		for (const line of yamlBlock.split(/\r?\n/)) {
+			const listMatch = line.match(/^\s+-\s+(.+)/);
+			if (listMatch && currentKey) {
+				const arr = (data[currentKey] as string[]) || [];
+				arr.push(listMatch[1].replace(/^["']|["']$/g, ''));
+				data[currentKey] = arr;
+				continue;
 			}
-		);
-		return matter(fixed);
+			const kvMatch = line.match(/^(\w+):\s*(.+)?$/);
+			if (kvMatch) {
+				currentKey = kvMatch[1];
+				data[currentKey] = kvMatch[2] ? kvMatch[2].replace(/^["']|["']$/g, '') : [];
+			}
+		}
+		return { data, content: rest.replace(/^\s*\n/, '') };
 	}
 }
 
