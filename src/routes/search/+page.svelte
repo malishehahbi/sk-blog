@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { pushState } from '$app/navigation';
 	import PostCard from '$lib/components/PostCard.svelte';
 	import type { PageData } from './$types';
 	import type { PostSummary } from '$lib/types/post';
@@ -13,23 +11,14 @@
 
 	let { data }: Props = $props();
 	
-	// Get all posts from server data (loaded at build time)
 	const allPosts = data.allPosts as PostSummary[];
 	
-	// Local input state
-	let inputValue = $state('');
+	let inputValue = $state(
+		browser ? (new URL(window.location.href).searchParams.get('q') || '') : ''
+	);
 	
-	// Get query from URL reactively (only in browser)
-	let query = $derived(browser ? ($page.url.searchParams.get('q') || '') : '');
+	let query = $derived(inputValue.trim());
 	
-	// Sync input with URL query
-	$effect(() => {
-		if (browser) {
-			inputValue = query;
-		}
-	});
-	
-	// Filter posts client-side based on query
 	let results = $derived.by(() => {
 		if (!query) return [];
 		const lowerQuery = query.toLowerCase();
@@ -43,18 +32,14 @@
 		});
 	});
 
-	function handleSubmit(e: Event) {
-		e.preventDefault();
-		if (inputValue.trim()) {
-			goto(`${base}/search/?q=${encodeURIComponent(inputValue.trim())}`);
-		} else {
-			goto(`${base}/search/`);
-		}
-	}
+	$effect(() => {
+		if (!browser) return;
+		const url = query ? `?q=${encodeURIComponent(query)}` : window.location.pathname;
+		pushState(url, {});
+	});
 
 	function handleClear() {
 		inputValue = '';
-		goto(`${base}/search/`);
 	}
 </script>
 
@@ -67,7 +52,7 @@
 	<header class="page-header container container-narrow">
 		<h1 class="page-title">Search</h1>
 		<div class="search-container">
-			<form class="search-form" onsubmit={handleSubmit}>
+			<div class="search-form">
 				<div class="search-input-wrapper">
 					<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<circle cx="11" cy="11" r="8" />
@@ -87,8 +72,7 @@
 						</button>
 					{/if}
 				</div>
-				<button type="submit" class="search-btn">Search</button>
-			</form>
+			</div>
 		</div>
 	</header>
 
@@ -112,12 +96,12 @@
 				</div>
 			{:else}
 				<div class="empty-state">
-					<p>Try searching for something else, or browse by <a href="{base}/categories/">categories</a> or <a href="{base}/tags/">tags</a>.</p>
+					<p>Try searching for something else.</p>
 				</div>
 			{/if}
 		{:else}
 			<div class="empty-state">
-				<p>Enter a search term to find posts.</p>
+				<p>Start typing to search posts.</p>
 			</div>
 		{/if}
 	</section>
@@ -208,24 +192,6 @@
 		height: 16px;
 	}
 
-	.search-btn {
-		padding: 14px 24px;
-		font-size: 0.875rem;
-		font-weight: 500;
-		font-family: inherit;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background-color: var(--color-black);
-		color: var(--color-white);
-		border: 1px solid var(--color-black);
-		cursor: pointer;
-		transition: background-color var(--transition-fast);
-	}
-
-	.search-btn:hover {
-		background-color: var(--color-gray-800);
-	}
-
 	.results-header {
 		margin-bottom: 32px;
 		padding-bottom: 24px;
@@ -254,15 +220,6 @@
 		color: var(--color-gray-500);
 	}
 
-	.empty-state a {
-		color: var(--color-gray-700);
-		text-decoration: underline;
-	}
-
-	.empty-state a:hover {
-		color: var(--color-black);
-	}
-
 	@media (max-width: 1024px) {
 		.results-grid {
 			grid-template-columns: repeat(2, 1fr);
@@ -270,14 +227,6 @@
 	}
 
 	@media (max-width: 640px) {
-		.search-form {
-			flex-direction: column;
-		}
-
-		.search-btn {
-			width: 100%;
-		}
-
 		.results-grid {
 			grid-template-columns: 1fr;
 		}

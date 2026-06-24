@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import ThemeSwitch from './ThemeSwitch.svelte';
 
 	interface Props {
 		categories?: { name: string; count: number }[];
@@ -44,6 +45,7 @@
 		</div>
 
 		<div class="footer-bottom">
+			<ThemeSwitch />
 			<p>&copy; {currentYear} Blog. All rights reserved.</p>
 		</div>
 	</div>
@@ -108,7 +110,10 @@
 		margin-top: 48px;
 		padding-top: 24px;
 		border-top: 1px solid var(--color-gray-200);
-		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
 	}
 
 	.footer-bottom p {
