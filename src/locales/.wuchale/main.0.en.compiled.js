@@ -1,16 +1,2 @@
-
-                /** @type import('wuchale').CompiledElement[] */
-export let c = ["Error - Blog","Page Not Found","Something went wrong","The page you're looking for doesn't exist or has been moved.","An unexpected error occurred. Please try again later.","Back to Home","Blog","A minimal, Swiss-design inspired personal blog",[0," min read"],"Blog - Home","Welcome to Your Blog",["No posts yet. Add your first markdown file to ",[0]," to get started."],"How to Add Posts",["Create a ",[0]," file in the ",[1]," directory with the following format:"],"Latest Posts","Home","Categories","Tags","Search","Toggle menu","A minimal, Swiss-design inspired personal blog. Built with SvelteKit and Markdown.","Links",["© ",0," Blog. All rights reserved."],"System","Light","Dark","Theme selection","Search posts...","Clear search",[0," - Blog"],["Browse all posts in ",0],"Category",["Search: ",0],"Search posts",["No results found for \"",0,"\""],["Found ",0," ",1," for \"",2,"\""],"Try searching for something else.","Start typing to search posts.","Categories - Blog","Browse all categories","Browse posts by category","No categories yet. Add categories to your posts to see them here.",["#",0," - Blog"],["Browse all posts tagged with ",0],"Tag","Tags - Blog","Browse all tags","Browse posts by tag","No tags yet. Add tags to your posts to see them here.",["Read ",0," on our blog"],["By ",0],"Tags:","Related Posts","Switch language","EN","AR","Inter, sans-serif","B","imh","img src=\"/logo.png\" alt=\"Logo\" class=\"logo-image\" />","Logo","Navigation"]
-                // only during dev, for HMR
-                let latestVersion = -1
-                // @ts-ignore
-                export function update({ version, data }) {
-                    if (latestVersion >= version) {
-                        return
-                    }
-                    for (const [ index, item ] of data['en'] ?? []) {
-                        c[index] = item
-                    }
-                    latestVersion = version
-                }
-            
+/** @type import('wuchale').CompiledElement[] */
+export let c = ["Error - Blog","Page Not Found","Something went wrong","The page you're looking for doesn't exist or has been moved.","An unexpected error occurred. Please try again later.","Back to Home","Blog","A minimal, Swiss-design inspired personal blog",[0," min read"],"Blog - Home","Welcome to Your Blog",["No posts yet. Add your first markdown file to ",[0]," to get started."],"How to Add Posts",["Create a ",[0]," file in the ",[1]," directory with the following format:"],"Latest Posts","Home","Categories","Tags","Search","Toggle menu","A minimal, Swiss-design inspired personal blog. Built with SvelteKit and Markdown.","Links","System","Light","Dark","Theme selection","Search posts...","Clear search",[0," - Blog"],["Browse all posts in ",0],"Category",["Search: ",0],"Search posts",["No results found for \"",0,"\""],["Found ",0," ",1," for \"",2,"\""],"Try searching for something else.","Start typing to search posts.","Categories - Blog","Browse all categories","Browse posts by category","No categories yet. Add categories to your posts to see them here.",["Browse all posts tagged with ",0],"Tag","Tags - Blog","Browse all tags","Browse posts by tag","No tags yet. Add tags to your posts to see them here.",["Read ",0," on our blog"],["By ",0],"Tags:","Related Posts","Switch language","Logo"]
