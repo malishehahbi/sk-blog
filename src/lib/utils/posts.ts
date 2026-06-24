@@ -27,10 +27,39 @@ function parseLocale(filename: string): { slug: string; locale: 'en' | 'ar' } {
 	return { slug, locale: 'en' };
 }
 
+function safeParseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
+	try {
+		return matter(raw);
+	} catch {
+		// If YAML parsing fails (e.g. unquoted values with colons),
+		// auto-quote unquoted string values and retry
+		const fixed = raw.replace(
+			/^---\n([\s\S]*?)\n---/,
+			(_match, yamlBlock: string) => {
+				const lines = yamlBlock.split('\n');
+				const fixedLines = lines.map((line: string) => {
+					if (/^\s+/.test(line)) return line;
+					const idx = line.indexOf(':');
+					if (idx === -1) return line;
+					const key = line.slice(0, idx);
+					const value = line.slice(idx + 1);
+					if (!value.trim() || /^["'[{\s]/.test(value.trim())) return line;
+					if (value.includes(':') || /[\u0600-\u06FF]/.test(value)) {
+						return `${key}: "${value.trim()}"`;
+					}
+					return line;
+				});
+				return `---\n${fixedLines.join('\n')}\n---`;
+			}
+		);
+		return matter(fixed);
+	}
+}
+
 function parsePostFile(filename: string): Post | null {
 	const filePath = path.join(POSTS_DIR, filename);
 	const fileContent = fs.readFileSync(filePath, 'utf-8');
-	const { data, content } = matter(fileContent);
+	const { data, content } = safeParseFrontmatter(fileContent);
 
 	const frontmatter = data as PostFrontmatter;
 
