@@ -27,10 +27,13 @@
 
 <header class="header">
 	<div class="header-inner container">
-		<a href="{base}/" class="logo">
-			<span class="logo-text">{t('Blog')}</span>
+	<div class="logo-container">
+		<a href="https://mohamada.li" class="logo">
+			<img width="80" height="100%" src="{base}/logo.svg" alt="Logo" class="logo-image" />
 		</a>
-
+		<a href="{base}/">
+		<span class="logo-text">/{t('Blog')}</span></a>
+	</div>
 		<nav class="nav-desktop">
 			<a href="{base}{localePrefix}/" class:active={isActive($page.url.pathname, localePrefix ? `/${locale}` : '/')}>{t('Home')}</a>
 			<a href="{base}{localePrefix}/categories/" class:active={isActive($page.url.pathname, `${localePrefix}/categories`)}>{t('Categories')}</a>
@@ -74,6 +77,12 @@
 		display: flex;
 		align-items: center;
 		gap: 8px;
+	}
+	
+	.logo-container{
+		display: flex;
+		align-items: center;
+		gap: 32px;
 	}
 
 	.logo-text {

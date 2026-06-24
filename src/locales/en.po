@@ -253,3 +253,22 @@ msgstr "Switch language"
 
 #~ msgid "AR"
 #~ msgstr "AR"
+
+#~ msgid "Inter, sans-serif"
+#~ msgstr "Inter, sans-serif"
+
+#~ msgid "B"
+#~ msgstr "B"
+
+#~ msgid "imh"
+#~ msgstr "imh"
+
+#~ msgid "img src=\"/logo.png\" alt=\"Logo\" class=\"logo-image\" />"
+#~ msgstr "img src=\"/logo.png\" alt=\"Logo\" class=\"logo-image\" />"
+
+#: src/lib/components/Navbar.svelte
+msgid "Logo"
+msgstr "Logo"
+
+#~ msgid "Navigation"
+#~ msgstr "Navigation"
