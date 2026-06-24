@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
+	import { t } from '../useT.svelte';
+
+	let locale = $derived($page.params.locale || '');
+	let localePrefix = $derived(locale ? `/${locale}` : '');
 
 	let menuOpen = $state(false);
 
@@ -9,12 +13,13 @@
 	}
 
 	function isSearchPage(pathname: string): boolean {
-		return pathname === `${base}/search` || pathname.startsWith(`${base}/search`);
+		const searchPath = `${base}${localePrefix}/search`;
+		return pathname === searchPath || pathname.startsWith(searchPath);
 	}
 
 	function isActive(pathname: string, path: string): boolean {
-		if (path === '/') {
-			return pathname === base || pathname === `${base}/`;
+		if (path === '/' || path === `/${locale}`) {
+			return pathname === base || pathname === `${base}/` || pathname === `${base}${localePrefix}/`;
 		}
 		return pathname.startsWith(`${base}${path}`);
 	}
@@ -23,17 +28,17 @@
 <header class="header">
 	<div class="header-inner container">
 		<a href="{base}/" class="logo">
-			<span class="logo-text">Blog</span>
+			<span class="logo-text">{t('Blog')}</span>
 		</a>
 
 		<nav class="nav-desktop">
-			<a href="{base}/" class:active={isActive($page.url.pathname, '/')}>Home</a>
-			<a href="{base}/categories/" class:active={isActive($page.url.pathname, '/categories')}>Categories</a>
-			<a href="{base}/tags/" class:active={isActive($page.url.pathname, '/tags')}>Tags</a>
-			<a href="{base}/search/" class:active={isSearchPage($page.url.pathname)}>Search</a>
+			<a href="{base}{localePrefix}/" class:active={isActive($page.url.pathname, localePrefix ? `/${locale}` : '/')}>{t('Home')}</a>
+			<a href="{base}{localePrefix}/categories/" class:active={isActive($page.url.pathname, `${localePrefix}/categories`)}>{t('Categories')}</a>
+			<a href="{base}{localePrefix}/tags/" class:active={isActive($page.url.pathname, `${localePrefix}/tags`)}>{t('Tags')}</a>
+			<a href="{base}{localePrefix}/search/" class:active={isSearchPage($page.url.pathname)}>{t('Search')}</a>
 		</nav>
 
-		<button class="menu-toggle" onclick={toggleMenu} aria-label="Toggle menu">
+		<button class="menu-toggle" onclick={toggleMenu} aria-label={t('Toggle menu')}>
 			<span class="bar" class:open={menuOpen}></span>
 			<span class="bar" class:open={menuOpen}></span>
 		</button>
@@ -41,10 +46,10 @@
 
 	{#if menuOpen}
 		<nav class="nav-mobile">
-			<a href="{base}/" class:active={isActive($page.url.pathname, '/')} onclick={() => menuOpen = false}>Home</a>
-			<a href="{base}/categories/" class:active={isActive($page.url.pathname, '/categories')} onclick={() => menuOpen = false}>Categories</a>
-			<a href="{base}/tags/" class:active={isActive($page.url.pathname, '/tags')} onclick={() => menuOpen = false}>Tags</a>
-			<a href="{base}/search/" class:active={isSearchPage($page.url.pathname)} onclick={() => menuOpen = false}>Search</a>
+			<a href="{base}{localePrefix}/" class:active={isActive($page.url.pathname, localePrefix ? `/${locale}` : '/')} onclick={() => menuOpen = false}>{t('Home')}</a>
+			<a href="{base}{localePrefix}/categories/" class:active={isActive($page.url.pathname, `${localePrefix}/categories`)} onclick={() => menuOpen = false}>{t('Categories')}</a>
+			<a href="{base}{localePrefix}/tags/" class:active={isActive($page.url.pathname, `${localePrefix}/tags`)} onclick={() => menuOpen = false}>{t('Tags')}</a>
+			<a href="{base}{localePrefix}/search/" class:active={isSearchPage($page.url.pathname)} onclick={() => menuOpen = false}>{t('Search')}</a>
 		</nav>
 	{/if}
 </header>

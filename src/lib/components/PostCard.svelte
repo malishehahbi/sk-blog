@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { base } from '$app/paths';
+	import { t } from '../useT.svelte';
 	import type { PostSummary } from '$lib/types/post';
 	import { formatDate } from '$lib/utils/date';
 
@@ -9,25 +11,28 @@
 	}
 
 	let { post, variant = 'default' }: Props = $props();
+
+	let locale = $derived($page.params.locale || '');
+	let localePrefix = $derived(locale ? `/${locale}` : '');
 </script>
 
 {#if variant === 'featured'}
 	<article class="post-card featured">
 		{#if post.featuredImage}
-			<a href="{base}/post/{post.slug}/" class="post-image-link">
+			<a href="{base}{localePrefix}/post/{post.slug}/" class="post-image-link">
 				<img src={post.featuredImage} alt={post.title} class="post-image" />
 			</a>
 		{/if}
 		<div class="post-content">
 			{#if post.categories && post.categories.length > 0}
 				<div class="post-meta">
-					<a href="{base}/category/{post.categories[0].toLowerCase()}/" class="post-category">
+					<a href="{base}{localePrefix}/category/{post.categories[0].toLowerCase()}/" class="post-category">
 						{post.categories[0]}
 					</a>
 				</div>
 			{/if}
 			<h2 class="post-title">
-				<a href="{base}/post/{post.slug}/">{post.title}</a>
+				<a href="{base}{localePrefix}/post/{post.slug}/">{post.title}</a>
 			</h2>
 			{#if post.excerpt}
 				<p class="post-excerpt">{post.excerpt}</p>
@@ -35,7 +40,7 @@
 			<div class="post-footer">
 				<time datetime={post.date}>{formatDate(post.date)}</time>
 				<span class="divider-dot">·</span>
-				<span>{post.readingTime} min read</span>
+				<span>{t('{0} min read', post.readingTime)}</span>
 			</div>
 		</div>
 	</article>
@@ -43,7 +48,7 @@
 	<article class="post-card compact">
 		<div class="post-content">
 			<h3 class="post-title">
-				<a href="{base}/post/{post.slug}/">{post.title}</a>
+				<a href="{base}{localePrefix}/post/{post.slug}/">{post.title}</a>
 			</h3>
 			<div class="post-footer">
 				<time datetime={post.date}>{formatDate(post.date)}</time>
@@ -53,20 +58,20 @@
 {:else}
 	<article class="post-card">
 		{#if post.featuredImage}
-			<a href="{base}/post/{post.slug}/" class="post-image-link">
+			<a href="{base}{localePrefix}/post/{post.slug}/" class="post-image-link">
 				<img src={post.featuredImage} alt={post.title} class="post-image" />
 			</a>
 		{/if}
 		<div class="post-content">
 			{#if post.categories && post.categories.length > 0}
 				<div class="post-meta">
-					<a href="{base}/category/{post.categories[0].toLowerCase()}/" class="post-category">
+					<a href="{base}{localePrefix}/category/{post.categories[0].toLowerCase()}/" class="post-category">
 						{post.categories[0]}
 					</a>
 				</div>
 			{/if}
 			<h3 class="post-title">
-				<a href="{base}/post/{post.slug}/">{post.title}</a>
+				<a href="{base}{localePrefix}/post/{post.slug}/">{post.title}</a>
 			</h3>
 			{#if post.excerpt}
 				<p class="post-excerpt">{post.excerpt}</p>
@@ -74,7 +79,7 @@
 			<div class="post-footer">
 				<time datetime={post.date}>{formatDate(post.date)}</time>
 				<span class="divider-dot">·</span>
-				<span>{post.readingTime} min read</span>
+				<span>{t('{0} min read', post.readingTime)}</span>
 			</div>
 		</div>
 	</article>

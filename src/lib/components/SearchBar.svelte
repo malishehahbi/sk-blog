@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { t } from '../useT.svelte';
 
 	interface Props {
 		value?: string;
@@ -7,7 +9,10 @@
 		autofocus?: boolean;
 	}
 
-	let { value = '', placeholder = 'Search posts...', autofocus = false }: Props = $props();
+	let { value = '', placeholder = t('Search posts...'), autofocus = false }: Props = $props();
+
+	let locale = $derived($page.params.locale || '');
+	let localePrefix = $derived(locale ? `/${locale}` : '');
 
 	// Sync inputValue with the prop when it changes (e.g., from URL)
 	let inputValue = $state(value);
@@ -19,13 +24,13 @@
 	function handleSubmit(e: Event) {
 		e.preventDefault();
 		if (inputValue.trim()) {
-			goto(`/search?q=${encodeURIComponent(inputValue.trim())}`, { invalidateAll: true });
+			goto(`${localePrefix}/search?q=${encodeURIComponent(inputValue.trim())}`, { invalidateAll: true });
 		}
 	}
 
 	function handleClear() {
 		inputValue = '';
-		goto('/search', { invalidateAll: true });
+		goto(`${localePrefix}/search`, { invalidateAll: true });
 	}
 </script>
 
@@ -43,14 +48,14 @@
 			{autofocus}
 		/>
 		{#if inputValue}
-			<button type="button" class="clear-btn" onclick={handleClear} aria-label="Clear search">
+			<button type="button" class="clear-btn" onclick={handleClear} aria-label={t('Clear search')}>
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 					<path d="M18 6 6 18M6 6l12 12" />
 				</svg>
 			</button>
 		{/if}
 	</div>
-	<button type="submit" class="search-btn">Search</button>
+	<button type="submit" class="search-btn">{t('Search')}</button>
 </form>
 
 <style>

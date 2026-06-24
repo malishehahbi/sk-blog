@@ -6,13 +6,11 @@ import type { Post, PostSummary, PostFrontmatter } from '$lib/types/post';
 
 const POSTS_DIR = path.join(process.cwd(), 'content/posts');
 
-// Calculate reading time (avg 200 words per minute)
 function calculateReadingTime(content: string): number {
 	const words = content.trim().split(/\s+/).length;
 	return Math.ceil(words / 200);
 }
 
-// Get all post files
 function getPostFiles(): string[] {
 	if (!fs.existsSync(POSTS_DIR)) {
 		return [];
@@ -20,7 +18,15 @@ function getPostFiles(): string[] {
 	return fs.readdirSync(POSTS_DIR).filter((file) => file.endsWith('.md'));
 }
 
-// Parse a single post file
+function parseLocale(filename: string): { slug: string; locale: 'en' | 'ar' } {
+	const match = filename.match(/^(.+?)\.(ar)\.md$/);
+	if (match) {
+		return { slug: match[1], locale: 'ar' };
+	}
+	const slug = filename.replace('.md', '');
+	return { slug, locale: 'en' };
+}
+
 function parsePostFile(filename: string): Post | null {
 	const filePath = path.join(POSTS_DIR, filename);
 	const fileContent = fs.readFileSync(filePath, 'utf-8');
@@ -28,31 +34,29 @@ function parsePostFile(filename: string): Post | null {
 
 	const frontmatter = data as PostFrontmatter;
 
-	// Skip drafts in production
 	if (frontmatter.draft && process.env.NODE_ENV === 'production') {
 		return null;
 	}
 
-	const slug = filename.replace('.md', '');
+	const { slug, locale } = parseLocale(filename);
 	const htmlContent = marked(content) as string;
 
 	return {
 		...frontmatter,
 		slug,
+		locale,
 		content: htmlContent,
 		readingTime: calculateReadingTime(content)
 	};
 }
 
-// Get all posts (sorted by date, newest first)
-export function getAllPosts(): PostSummary[] {
+export function getAllPosts(locale?: 'en' | 'ar'): PostSummary[] {
 	const files = getPostFiles();
 	const posts: PostSummary[] = [];
 
 	for (const file of files) {
 		const post = parsePostFile(file);
-		if (post) {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		if (post && (!locale || post.locale === locale)) {
 			const { content, ...summary } = post;
 			posts.push(summary);
 		}
@@ -61,37 +65,34 @@ export function getAllPosts(): PostSummary[] {
 	return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-// Get a single post by slug
-export function getPostBySlug(slug: string): Post | null {
-	const filename = `${slug}.md`;
-	const filePath = path.join(POSTS_DIR, filename);
-
-	if (!fs.existsSync(filePath)) {
-		return null;
+export function getPostBySlug(slug: string, locale?: 'en' | 'ar'): Post | null {
+	const locales = locale ? [locale] : ['en', 'ar'];
+	for (const loc of locales) {
+		const filename = loc === 'en' ? `${slug}.md` : `${slug}.ar.md`;
+		const filePath = path.join(POSTS_DIR, filename);
+		if (fs.existsSync(filePath)) {
+			return parsePostFile(filename);
+		}
 	}
-
-	return parsePostFile(filename);
+	return null;
 }
 
-// Get posts by category
-export function getPostsByCategory(category: string): PostSummary[] {
-	const allPosts = getAllPosts();
+export function getPostsByCategory(category: string, locale?: 'en' | 'ar'): PostSummary[] {
+	const allPosts = getAllPosts(locale);
 	return allPosts.filter((post) =>
 		post.categories?.some((cat) => cat.toLowerCase() === category.toLowerCase())
 	);
 }
 
-// Get posts by tag
-export function getPostsByTag(tag: string): PostSummary[] {
-	const allPosts = getAllPosts();
+export function getPostsByTag(tag: string, locale?: 'en' | 'ar'): PostSummary[] {
+	const allPosts = getAllPosts(locale);
 	return allPosts.filter((post) =>
 		post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
 	);
 }
 
-// Get all categories with counts
-export function getAllCategories(): { name: string; count: number }[] {
-	const allPosts = getAllPosts();
+export function getAllCategories(locale?: 'en' | 'ar'): { name: string; count: number }[] {
+	const allPosts = getAllPosts(locale);
 	const categoryMap = new Map<string, number>();
 
 	for (const post of allPosts) {
@@ -108,9 +109,8 @@ export function getAllCategories(): { name: string; count: number }[] {
 		.sort((a, b) => b.count - a.count);
 }
 
-// Get all tags with counts
-export function getAllTags(): { name: string; count: number }[] {
-	const allPosts = getAllPosts();
+export function getAllTags(locale?: 'en' | 'ar'): { name: string; count: number }[] {
+	const allPosts = getAllPosts(locale);
 	const tagMap = new Map<string, number>();
 
 	for (const post of allPosts) {
@@ -127,9 +127,8 @@ export function getAllTags(): { name: string; count: number }[] {
 		.sort((a, b) => b.count - a.count);
 }
 
-// Search posts
-export function searchPosts(query: string): PostSummary[] {
-	const allPosts = getAllPosts();
+export function searchPosts(query: string, locale?: 'en' | 'ar'): PostSummary[] {
+	const allPosts = getAllPosts(locale);
 	const lowerQuery = query.toLowerCase();
 
 	return allPosts.filter((post) => {
@@ -137,19 +136,16 @@ export function searchPosts(query: string): PostSummary[] {
 		const excerptMatch = post.excerpt?.toLowerCase().includes(lowerQuery);
 		const tagMatch = post.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery));
 		const categoryMatch = post.categories?.some((cat) => cat.toLowerCase().includes(lowerQuery));
-
 		return titleMatch || excerptMatch || tagMatch || categoryMatch;
 	});
 }
 
-// Get related posts (by shared tags/categories)
-export function getRelatedPosts(currentSlug: string, limit: number = 3): PostSummary[] {
-	const currentPost = getPostBySlug(currentSlug);
+export function getRelatedPosts(currentSlug: string, limit: number = 3, locale?: 'en' | 'ar'): PostSummary[] {
+	const currentPost = getPostBySlug(currentSlug, locale);
 	if (!currentPost) return [];
 
-	const allPosts = getAllPosts().filter((p) => p.slug !== currentSlug);
+	const allPosts = getAllPosts(locale).filter((p) => p.slug !== currentSlug);
 
-	// Score posts by shared tags and categories
 	const scoredPosts = allPosts.map((post) => {
 		let score = 0;
 

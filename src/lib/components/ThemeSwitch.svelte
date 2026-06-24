@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from '../useT.svelte';
 	type Theme = 'system' | 'light' | 'dark';
 
 	let theme = $state<Theme>('system');
@@ -53,13 +54,13 @@
 	});
 
 	const options: { value: Theme; label: string }[] = [
-		{ value: 'system', label: 'System' },
-		{ value: 'light', label: 'Light' },
-		{ value: 'dark', label: 'Dark' },
+		{ value: 'system', label: t('System') },
+		{ value: 'light', label: t('Light') },
+		{ value: 'dark', label: t('Dark') },
 	];
 </script>
 
-<div class="theme-switch" role="radiogroup" aria-label="Theme selection">
+<div class="theme-switch" role="radiogroup" aria-label={t('Theme selection')}>
 	{#each options as opt}
 		<button
 			class="option"

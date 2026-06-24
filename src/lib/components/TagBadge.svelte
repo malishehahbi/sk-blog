@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 
 	interface Props {
@@ -9,11 +10,13 @@
 
 	let { name, count, type = 'category' }: Props = $props();
 
-	// Use $derived to make href reactive when props change
+	let locale = $derived($page.params.locale || '');
+	let localePrefix = $derived(locale ? `/${locale}` : '');
+
 	let href = $derived(
 		type === 'category' 
-			? `${base}/category/${name.toLowerCase()}/` 
-			: `${base}/tag/${name.toLowerCase()}/`
+			? `${base}${localePrefix}/category/${name.toLowerCase()}/` 
+			: `${base}${localePrefix}/tag/${name.toLowerCase()}/`
 	);
 </script>
 

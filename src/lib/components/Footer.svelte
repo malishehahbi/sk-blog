@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { t } from '../useT.svelte';
 	import ThemeSwitch from './ThemeSwitch.svelte';
+	import LangSwitch from './LangSwitch.svelte';
 
 	interface Props {
 		categories?: { name: string; count: number }[];
@@ -14,15 +16,15 @@
 	<div class="container">
 		<div class="footer-grid">
 			<div class="footer-about">
-				<h3 class="footer-title">Blog</h3>
+				<h3 class="footer-title">{t('Blog')}</h3>
 				<p class="footer-description">
-					A minimal, Swiss-design inspired personal blog. Built with SvelteKit and Markdown.
+					{t('A minimal, Swiss-design inspired personal blog. Built with SvelteKit and Markdown.')}
 				</p>
 			</div>
 
 			{#if categories.length > 0}
 				<div class="footer-categories">
-					<h4 class="footer-heading">Categories</h4>
+					<h4 class="footer-heading">{t('Categories')}</h4>
 					<ul class="footer-list">
 						{#each categories.slice(0, 5) as category}
 							<li>
@@ -34,19 +36,22 @@
 			{/if}
 
 			<div class="footer-links">
-				<h4 class="footer-heading">Links</h4>
+				<h4 class="footer-heading">{t('Links')}</h4>
 				<ul class="footer-list">
-					<li><a href="{base}/">Home</a></li>
-					<li><a href="{base}/categories/">Categories</a></li>
-					<li><a href="{base}/tags/">Tags</a></li>
-					<li><a href="{base}/search/">Search</a></li>
+					<li><a href="{base}/">{t('Home')}</a></li>
+					<li><a href="{base}/categories/">{t('Categories')}</a></li>
+					<li><a href="{base}/tags/">{t('Tags')}</a></li>
+					<li><a href="{base}/search/">{t('Search')}</a></li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="footer-bottom">
-			<ThemeSwitch />
-			<p>&copy; {currentYear} Blog. All rights reserved.</p>
+			<div class="footer-switches">
+				<LangSwitch />
+				<ThemeSwitch />
+			</div>
+			<p>{t('© {0} Blog. All rights reserved.', currentYear)}</p>
 		</div>
 	</div>
 </footer>
@@ -114,6 +119,12 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 16px;
+	}
+
+	.footer-switches {
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	.footer-bottom p {

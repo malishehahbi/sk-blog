@@ -1,0 +1,255 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Source-Language: en\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "Error - Blog"
+msgstr "خطأ - المدونة"
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "Page Not Found"
+msgstr "الصفحة غير موجودة"
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "Something went wrong"
+msgstr "حدث خطأ ما"
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr "الصفحة التي تبحث عنها غير موجودة أو تم نقلها."
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "An unexpected error occurred. Please try again later."
+msgstr "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا."
+
+#: src/routes/[[locale]]/+error.svelte
+msgid "Back to Home"
+msgstr "العودة إلى الرئيسية"
+
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Navbar.svelte
+#: src/routes/[[locale]]/+layout.svelte
+msgid "Blog"
+msgstr "المدونة"
+
+#: src/routes/[[locale]]/+layout.svelte
+msgid "A minimal, Swiss-design inspired personal blog"
+msgstr "مدونة شخصية بسيطة مستوحاة من التصميم السويسري"
+
+#: src/lib/components/PostCard.svelte
+#: src/lib/components/PostCard.svelte
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+msgid "{0} min read"
+msgstr "{0} دقائق للقراءة"
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "Blog - Home"
+msgstr "المدونة - الرئيسية"
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "Welcome to Your Blog"
+msgstr "مرحبًا بك في مدونتك"
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "No posts yet. Add your first markdown file to <0/> to get started."
+msgstr "لا توجد مقالات بعد. أضف أول ملف Markdown إلى <0/> للبدء."
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "How to Add Posts"
+msgstr "كيفية إضافة المقالات"
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "Create a <0/> file in the <1/> directory with the following format:"
+msgstr "أنشئ ملف <0/> داخل مجلد <1/> بالتنسيق التالي:"
+
+#: src/routes/[[locale]]/+page.svelte
+msgid "Latest Posts"
+msgstr "أحدث المقالات"
+
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Navbar.svelte
+#: src/lib/components/Navbar.svelte
+msgid "Home"
+msgstr "الرئيسية"
+
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Navbar.svelte
+#: src/lib/components/Navbar.svelte
+#: src/routes/[[locale]]/categories/+page.svelte
+msgid "Categories"
+msgstr "التصنيفات"
+
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Navbar.svelte
+#: src/lib/components/Navbar.svelte
+#: src/routes/[[locale]]/tags/+page.svelte
+msgid "Tags"
+msgstr "الوسوم"
+
+#: src/lib/components/Footer.svelte
+#: src/lib/components/Navbar.svelte
+#: src/lib/components/Navbar.svelte
+#: src/lib/components/SearchBar.svelte
+#: src/routes/[[locale]]/search/+page.svelte
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Search"
+msgstr "البحث"
+
+#: src/lib/components/Navbar.svelte
+msgid "Toggle menu"
+msgstr "تبديل القائمة"
+
+#: src/lib/components/Footer.svelte
+msgid "A minimal, Swiss-design inspired personal blog. Built with SvelteKit and Markdown."
+msgstr "مدونة شخصية بسيطة مستوحاة من التصميم السويسري، مبنية باستخدام SvelteKit وMarkdown."
+
+#: src/lib/components/Footer.svelte
+msgid "Links"
+msgstr "الروابط"
+
+#~ msgid "© {0} Blog. All rights reserved."
+#~ msgstr "© {0} المدونة. جميع الحقوق محفوظة."
+
+#: src/lib/components/ThemeSwitch.svelte
+msgid "System"
+msgstr "النظام"
+
+#: src/lib/components/ThemeSwitch.svelte
+msgid "Light"
+msgstr "فاتح"
+
+#: src/lib/components/ThemeSwitch.svelte
+msgid "Dark"
+msgstr "داكن"
+
+#: src/lib/components/ThemeSwitch.svelte
+msgid "Theme selection"
+msgstr "اختيار المظهر"
+
+#: src/lib/components/SearchBar.svelte
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Search posts..."
+msgstr "ابحث في المقالات..."
+
+#: src/lib/components/SearchBar.svelte
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Clear search"
+msgstr "مسح البحث"
+
+#. 
+#. 0: post.title
+#. 0: query ? `Search\\: ${query}` \\: 'Search'
+#: src/routes/[[locale]]/category/[slug]/+page.svelte
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "{0} - Blog"
+msgstr "{0} - المدونة"
+
+#: src/routes/[[locale]]/category/[slug]/+page.svelte
+msgid "Browse all posts in {0}"
+msgstr "تصفح جميع المقالات في {0}"
+
+#: src/routes/[[locale]]/category/[slug]/+page.svelte
+msgid "Category"
+msgstr "التصنيف"
+
+#. 0: query
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Search: {0}"
+msgstr "البحث: {0}"
+
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Search posts"
+msgstr "البحث في المقالات"
+
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "No results found for \"{0}\""
+msgstr "لم يتم العثور على نتائج لـ \"{0}\""
+
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Found {0} {1} for \"{2}\""
+msgstr "تم العثور على {0} {1} لـ \"{2}\""
+
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Try searching for something else."
+msgstr "جرّب البحث عن شيء آخر."
+
+#: src/routes/[[locale]]/search/+page.svelte
+msgid "Start typing to search posts."
+msgstr "ابدأ بالكتابة للبحث في المقالات."
+
+#: src/routes/[[locale]]/categories/+page.svelte
+msgid "Categories - Blog"
+msgstr "التصنيفات - المدونة"
+
+#: src/routes/[[locale]]/categories/+page.svelte
+msgid "Browse all categories"
+msgstr "تصفح جميع التصنيفات"
+
+#: src/routes/[[locale]]/categories/+page.svelte
+msgid "Browse posts by category"
+msgstr "تصفح المقالات حسب التصنيف"
+
+#: src/routes/[[locale]]/categories/+page.svelte
+msgid "No categories yet. Add categories to your posts to see them here."
+msgstr "لا توجد تصنيفات بعد. أضف تصنيفات إلى مقالاتك لتظهر هنا."
+
+#~ msgid "#{0} - Blog"
+#~ msgstr "#{0} - المدونة"
+
+#: src/routes/[[locale]]/tag/[slug]/+page.svelte
+msgid "Browse all posts tagged with {0}"
+msgstr "تصفح جميع المقالات الموسومة بـ {0}"
+
+#: src/routes/[[locale]]/tag/[slug]/+page.svelte
+msgid "Tag"
+msgstr "الوسم"
+
+#: src/routes/[[locale]]/tags/+page.svelte
+msgid "Tags - Blog"
+msgstr "الوسوم - المدونة"
+
+#: src/routes/[[locale]]/tags/+page.svelte
+msgid "Browse all tags"
+msgstr "تصفح جميع الوسوم"
+
+#: src/routes/[[locale]]/tags/+page.svelte
+msgid "Browse posts by tag"
+msgstr "تصفح المقالات حسب الوسم"
+
+#: src/routes/[[locale]]/tags/+page.svelte
+msgid "No tags yet. Add tags to your posts to see them here."
+msgstr "لا توجد وسوم بعد. أضف وسومًا إلى مقالاتك لتظهر هنا."
+
+#. 0: post.title
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+msgid "Read {0} on our blog"
+msgstr "اقرأ {0} على مدونتنا"
+
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+msgid "By {0}"
+msgstr "بقلم {0}"
+
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+msgid "Tags:"
+msgstr "الوسوم:"
+
+#: src/routes/[[locale]]/post/[slug]/+page.svelte
+msgid "Related Posts"
+msgstr "مقالات ذات صلة"
+
+#: src/lib/components/LangSwitch.svelte
+msgid "Switch language"
+msgstr "تغيير اللغة"
+
+#~ msgid "EN"
+#~ msgstr "EN"
+
+#~ msgid "AR"
+#~ msgstr "AR"
